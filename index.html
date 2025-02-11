@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍽 ASRAR </title>
+    <style>
+        /* إضافة خطوط جديدة */
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif; /* خط عربي أنيق */
+            background: radial-gradient(circle at top, hsl(39, 100%, 4%), #13131a);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .logo {
+            width: 150px;
+            margin: 20px auto;
+            display: block;
+            filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.5));
+        }
+
+        /* تصميم أزرار المنيو */
+        .toggle-menu-btn {
+            padding: 17px 40px;
+            border-radius: 10px;
+            border: 0;
+            background-color: rgb(84, 60, 0);
+            letter-spacing: 1.5px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-shadow: rgb(0, 0, 0) 0px 10px 0px 0px;
+            color: hsl(0, 0%, 100%);
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            font-family: 'Poppins', sans-serif; /* خط إنجليزي أنيق */
+        }
+
+        .toggle-menu-btn:hover {
+            box-shadow: rgb(0, 0, 0) 0px 7px 0px 0px;
+            transform: translateY(-2px);
+        }
+
+        .toggle-menu-btn:active {
+            background-color: rgb(0, 0, 0);
+            box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+            transform: translateY(5px);
+            transition: 200ms;
+        }
+
+        .menu-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px 0;
+            display: none; /* مخفي بشكل افتراضي */
+        }
+
+        .menu-container img {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 20px; /* زيادة الـ padding */
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+            box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .footer .payment-methods {
+            display: flex;
+            justify-content: center; /* توسيط العناصر أفقيًا */
+            gap: 15px; /* زيادة المسافة بين الأيقونات */
+            margin-top: 10px;
+            flex-wrap: wrap; /* لجعل الأيقونات تنتقل لسطر جديد على الشاشات الصغيرة */
+        }
+
+        .footer .payment-methods img {
+            width: 50px; /* زيادة حجم الأيقونات قليلاً */
+            height: 50px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .footer .payment-methods img:hover {
+            transform: scale(1.1);
+        }
+
+        .footer p {
+            margin: 10px 0 0 0; /* تعديل الهوامش */
+            text-align: center; /* توسيط النص */
+            font-size: 14px;
+            color: #fff;
+            padding: 0 10px; /* إضافة padding لتجنب التصاق النص بالحواف */
+        }
+
+        /* تصميم البوب */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 300px;
+            background: rgba(255, 255, 255, 0.7); /* شفافية أكثر */
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            color: #000;
+            z-index: 1000;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px); /* تأثير ضبابي */
+        }
+
+        .popup h2 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .popup p {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+        }
+
+        /* تصميم أزرار البوب */
+        .popup-close {
+            padding: 17px 40px;
+            border-radius: 10px;
+            border: 0;
+            background-color: rgb(84, 60, 0);
+            letter-spacing: 1.5px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-shadow: rgb(0, 0, 0) 0px 10px 0px 0px;
+            color: hsl(0, 0%, 100%);
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif; /* خط إنجليزي أنيق */
+        }
+
+        .popup-close:hover {
+            box-shadow: rgb(0, 0, 0) 0px 7px 0px 0px;
+            transform: translateY(-2px);
+        }
+
+        .popup-close:active {
+            background-color: rgb(0, 0, 0);
+            box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+            transform: translateY(5px);
+            transition: 200ms;
+        }
+
+        /* تصميم زر السوشيال ميديا */
+        .social-btn {
+            position: fixed;
+            bottom: 150px; /* تحريك الزر لأعلى */
+            right: 20px;
+            background: none; /* إزالة الخلفية */
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: none; /* إزالة الظل */
+            transition: all 0.3s ease;
+            opacity: 0.8; /* شفافية الزر */
+        }
+
+        .social-btn:hover {
+            transform: scale(1.1);
+            opacity: 1; /* إزالة الشفافية عند التمرير */
+        }
+
+        /* تصميم أيقونات السوشيال ميديا */
+        .social-wrapper {
+            position: fixed;
+            bottom: 210px; /* تحريك الأيقونات لأعلى */
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            background: none; /* إزالة الخلفية */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: none; /* إزالة الظل */
+            opacity: 0.8; /* شفافية الأيقونات */
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+            opacity: 1; /* إزالة الشفافية عند التمرير */
+        }
+
+        .social-icon img {
+            width: 30px;
+            height: 30px;
+            filter: none; /* إزالة الفلتر */
+        }
+
+        /* ألوان أيقونات السوشيال ميديا */
+        .social-icon.facebook img {
+            filter: none; /* فيسبوك أزرق */
+        }
+
+        .social-icon.instagram img {
+            filter: none; /* إنستجرام باللون الطبيعي */
+        }
+
+        .social-icon.tiktok img {
+            filter: none; /* تيك توك باللون الطبيعي */
+        }
+
+        .social-icon.whatsapp img {
+            filter: none; /* واتساب أخضر */
+        }
+
+        /* زر تبديل اللغة */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgb(84, 60, 0); /* نفس لون زر المنيو */
+            color: hsl(0, 0%, 100%);
+            padding: 8px 16px; /* تصغير الحجم */
+            border-radius: 10px; /* نفس تصميم زر المنيو */
+            border: 0;
+            font-size: 12px; /* تصغير حجم الخط */
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: rgb(0, 0, 0) 0px 10px 0px 0px; /* نفس ظل زر المنيو */
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif; /* خط إنجليزي أنيق */
+        }
+
+        .language-switcher:hover {
+            box-shadow: rgb(0, 0, 0) 0px 7px 0px 0px;
+            transform: translateY(-2px);
+        }
+
+        .language-switcher:active {
+            background-color: rgb(0, 0, 0);
+            box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+            transform: translateY(5px);
+            transition: 200ms;
+        }
+
+        /* زر العودة إلى الأعلى */
+        #backToTopBtn {
+            display: none;
+            position: fixed;
+            top: 20px; /* رفع الزر لأعلى */
+            left: 20px; /* نقله إلى الجانب الأيسر */
+            z-index: 99;
+            padding: 12px 24px; /* تصغير الحجم قليلاً */
+            border-radius: 10px;
+            border: 0;
+            background-color: rgb(84, 60, 0);
+            letter-spacing: 1.5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: rgb(0, 0, 0) 0px 10px 0px 0px;
+            color: hsl(0, 0%, 100%);
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif; /* خط إنجليزي أنيق */
+        }
+
+        #backToTopBtn:hover {
+            box-shadow: rgb(0, 0, 0) 0px 7px 0px 0px;
+            transform: translateY(-2px); /* تعديل التحريك عند التمرير */
+        }
+
+        #backToTopBtn:active {
+            background-color: rgb(0, 0, 0);
+            box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+            transform: translateY(5px); /* تعديل التحريك عند الضغط */
+            transition: 200ms;
+        }
+
+        /* تصميم زر الإغلاق في البوب التانية */
+        .close-popup-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            border: 0;
+            background-color: rgb(84, 60, 0);
+            letter-spacing: 1.5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: rgb(0, 0, 0) 0px 10px 0px 0px;
+            color: hsl(0, 0%, 100%);
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif; /* خط إنجليزي أنيق */
+        }
+
+        .close-popup-btn:hover {
+            box-shadow: rgb(0, 0, 0) 0px 7px 0px 0px;
+            transform: translateY(-2px);
+        }
+
+        .close-popup-btn:active {
+            background-color: rgb(0, 0, 0);
+            box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+            transform: translateY(5px);
+            transition: 200ms;
+        }
+
+        /* تصميم حقل إدخال الرقم */
+        #phoneNumber {
+            width: 80%; /* تقليل العرض قليلاً */
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            transition: border-color 0.3s ease;
+            text-align: center; /* توسيط النص داخل الحقل */
+        }
+
+        #phoneNumber:focus {
+            border-color: rgb(84, 60, 0);
+            outline: none;
+        }
+
+        /* تعديلات البوب التانية */
+        #secondPopup {
+            padding-top: 50px; /* زيادة الـ padding من الأعلى علشان يبعد عن زر الإغلاق */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #secondPopup h2 {
+            margin-top: 20px; /* نزل العنوان شوية */
+        }
+
+        #secondPopup input {
+            margin-top: 10px; /* نزل الحقل شوية */
+        }
+
+        /* تصميم رسالة التأكيد والخطأ */
+        .confirmation-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9); /* خلفية شفافة */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: #000;
+            z-index: 1000;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 18px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsiveness */
+        @media (max-width: 600px) {
+            .logo {
+                width: 120px;
+            }
+
+            .popup {
+                padding: 15px;
+            }
+
+            .popup-close {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+
+            .social-btn {
+                bottom: 130px; /* تعديل للشاشات الصغيرة */
+                right: 10px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .social-wrapper {
+                bottom: 180px; /* تعديل للشاشات الصغيرة */
+                right: 10px;
+            }
+
+            .social-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .social-icon img {
+                width: 24px;
+                height: 24px;
+            }
+
+            #backToTopBtn {
+                top: 15px; /* تعديل للشاشات الصغيرة */
+                left: 10px;
+                padding: 10px 20px; /* تصغير حجم الزر */
+                font-size: 12px;
+            }
+
+            .footer .payment-methods img {
+                width: 40px; /* تصغير حجم الأيقونات على الشاشات الصغيرة */
+                height: 40px;
+            }
+
+            .footer p {
+                font-size: 12px; /* تصغير حجم النص على الشاشات الصغيرة */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- زر تبديل اللغة -->
+    <div class="language-switcher" onclick="toggleLanguage()">EN</div>
+
+    <img src="logo.png" alt="لوجو المطعم" class="logo" loading="lazy">
+    <button class="toggle-menu-btn" onclick="toggleMenu()">المنيو</button>
+
+    <div class="menu-container" id="menuContainer">
+        <!-- هنا تضيف صور المنيو -->
+        <img src="2.webp" alt="صفحة 1 من المنيو" loading="lazy">
+        <img src="3.webp" alt="صفحة 2 من المنيو" loading="lazy">
+        <img src="4.webp" alt="صفحة 3 من المنيو" loading="lazy">
+        <img src="5.webp" alt="صفحة 1 من المنيو" loading="lazy">
+        <img src="6.webp" alt="صفحة 2 من المنيو" loading="lazy">
+        <img src="7.webp" alt="صفحة 3 من المنيو" loading="lazy">
+        <img src="8.webp" alt="صفحة 1 من المنيو" loading="lazy">
+        <img src="9.webp" alt="صفحة 2 من المنيو" loading="lazy">
+        <img src="10.webp" alt="صفحة 3 من المنيو" loading="lazy">
+        <img src="11.webp" alt="صفحة 1 من المنيو" loading="lazy">
+        <img src="12.webp" alt="صفحة 2 من المنيو" loading="lazy">
+        <img src="13.webp" alt="صفحة 3 من المنيو" loading="lazy">
+        <img src="14.webp" alt="صفحة 2 من المنيو" loading="lazy">
+        <img src="15.webp" alt="صفحة 3 من المنيو" loading="lazy">
+        <img src="16.webp" alt="صفحة 1 من المنيو" loading="lazy">
+        <img src="17.webp" alt="صفحة 2 من المنيو" loading="lazy">
+        <img src="18.webp" alt="صفحة 2 من المنيو" loading="lazy">
+        <!-- كرر السطر السابق لكل صفحة من المنيو -->
+    </div>
+
+    <!-- البوب الأول -->
+    <div id="popup" class="popup">
+        <h2>أهلاً بحضرتك في أَســرَارٌ</h2>
+        <p> نتمنى يكون يوم حضرتك سعيد.❤️ </p>
+        <button class="popup-close" onclick="closePopup()"> استمتع بالمنيو </button>
+    </div>
+
+    <!-- البوب الثاني -->
+    <div id="secondPopup" class="popup" style="display: none;">
+        <button class="close-popup-btn" onclick="closeSecondPopup()">X</button> <!-- زر الإغلاق -->
+        <h2 id="secondPopupTitle">ادخل رقمك عشان تعرف كل العروض أول بأول!😍  </h2>
+        <input type="text" id="phoneNumber" placeholder="رقم الهاتف" maxlength="11">
+        <button class="popup-close" onclick="submitPhoneNumber()" id="submitButton">إرسال</button>
+    </div>
+
+    <!-- رسالة التأكيد -->
+    <div id="confirmationMessage" class="confirmation-message" style="display: none;">
+        <p>شكرًا لحضرتك! هنبعت لحضرتك كل عروضنا  ❤️  </p>
+    </div>
+
+    <!-- رسالة الخطأ -->
+    <div id="errorMessage" class="confirmation-message" style="display: none;">
+        <p>رقم الهاتف غير صحيح! يرجى إدخال رقم صحيح مكون من 11 رقم.</p>
+    </div>
+
+    <div class="footer">
+        <div class="payment-methods">
+            <img src="visa.png" alt="Visa" loading="lazy">
+            <img src="mastercard.png" alt="Mastercard" loading="lazy">
+            <img src="instapay.png" alt="InstaPay" loading="lazy">
+        </div>
+        <p>حقوق الطبع والنشر © 2025 advertisingagency__o2 </p>
+    </div>
+
+    <!-- زر السوشيال ميديا -->
+    <div class="social-btn" onclick="toggleSocialIcons()">
+        <img src="social-icon.png" alt="Social Media" width="24" height="24">
+    </div>
+
+    <!-- أيقونات السوشيال ميديا -->
+    <div class="social-wrapper" id="socialWrapper">
+        <div class="social-icon facebook">
+            <a href="https://www.facebook.com/AsrarRox/" target="_blank">
+                <img src="facebook-icon.png" alt="Facebook">
+            </a>
+        </div>
+        <div class="social-icon instagram">
+            <a href="https://www.instagram.com/asrar_rox/" target="_blank">
+                <img src="instagram-icon.png" alt="Instagram">
+            </a>
+        </div>
+        <div class="social-icon tiktok">
+            <a href="https://www.tiktok.com/@asrar__rox" target="_blank">
+                <img src="tiktok-icon.png" alt="TikTok">
+            </a>
+        </div>
+        <div class="social-icon whatsapp">
+            <a href="https://wa.me/1148097660" target="_blank">
+                <img src="whatsapp-icon.png" alt="WhatsApp">
+            </a>
+        </div>
+    </div>
+
+    <!-- زر العودة إلى الأعلى -->
+    <button id="backToTopBtn" title="Go to top">↑</button>
+
+    <script>
+        // وظيفة عرض/إخفاء المنيو
+        function toggleMenu() {
+            const menuContainer = document.getElementById('menuContainer');
+            const toggleButton = document.querySelector('.toggle-menu-btn');
+
+            menuContainer.style.display = 'block'; // عرض المنيو
+            toggleButton.style.display = 'none'; // إخفاء الزر بعد الضغط عليه
+        }
+
+        // وظيفة إغلاق البوب الأول
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('secondPopup').style.display = 'block'; // عرض البوب الثاني
+        }
+
+        // وظيفة إغلاق البوب الثاني
+        function closeSecondPopup() {
+            document.getElementById('secondPopup').style.display = 'none'; // إخفاء البوب الثاني
+        }
+
+        // وظيفة إرسال الرقم
+        function submitPhoneNumber() {
+            const phoneNumber = document.getElementById('phoneNumber').value;
+
+            if (phoneNumber.length === 11 && /^01[0-9]{9}$/.test(phoneNumber)) {
+                // إخفاء البوب الثاني
+                document.getElementById('secondPopup').style.display = 'none';
+
+                // عرض رسالة التأكيد
+                const confirmationMessage = document.getElementById('confirmationMessage');
+                confirmationMessage.style.display = 'block';
+
+                // إخفاء الرسالة بعد 3 ثواني
+                setTimeout(() => {
+                    confirmationMessage.style.display = 'none';
+                }, 3000);
+
+                // حفظ الرقم (اختياري)
+                savePhoneNumber(phoneNumber);
+            } else {
+                // إخفاء البوب الثاني مؤقتًا
+                document.getElementById('secondPopup').style.display = 'none';
+
+                // عرض رسالة الخطأ
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.style.display = 'block';
+
+                // إخفاء رسالة الخطأ بعد 3 ثواني وإعادة عرض البوب الثاني
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                    document.getElementById('secondPopup').style.display = 'block';
+                }, 3000);
+            }
+        }
+
+        // وظيفة لحفظ الرقم باستخدام Google Forms
+        function savePhoneNumber(phoneNumber) {
+            const formURL = 'https://docs.google.com/forms/d/e/1FAIpQLSceXWU3g4M3VMIUuP_8D6my2orSvmOTQogEBSBi8ylzhVHFBA/formResponse'; // رابط الفورم
+            const data = new FormData();
+            data.append('entry.991102379', phoneNumber); // استبدل بـ ID الحقل في الفورم
+
+            fetch(formURL, {
+                method: 'POST',
+                body: data,
+                mode: 'no-cors'
+            }).then(response => {
+                console.log('تم إرسال البيانات بنجاح!');
+            }).catch(error => {
+                console.error('حدث خطأ أثناء الإرسال:', error);
+            });
+        }
+
+        // وظيفة عرض/إخفاء أيقونات السوشيال ميديا
+        function toggleSocialIcons() {
+            const socialWrapper = document.getElementById('socialWrapper');
+            socialWrapper.style.display = socialWrapper.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // عرض البوب الأول عند تحميل الصفحة
+        window.onload = function () {
+            document.getElementById('popup').style.display = 'block';
+        };
+
+        // تبديل اللغة بين العربية والإنجليزية
+        function toggleLanguage() {
+            const langButton = document.querySelector('.language-switcher');
+            const isArabic = document.documentElement.lang === 'ar';
+
+            if (isArabic) {
+                document.documentElement.lang = 'en';
+                document.documentElement.dir = 'ltr';
+                langButton.textContent = 'AR';
+                // تغيير النصوص إلى الإنجليزية
+                document.querySelector('.toggle-menu-btn').textContent = ' The menu';
+                document.querySelector('#popup h2').textContent = 'Welcome to ASRAR';
+                document.querySelector('#popup p').textContent = 'We hope you have a happy day. ❤️';
+                document.querySelector('.popup-close').textContent = 'Enjoy the menu';
+                document.querySelector('.footer p').textContent = 'Copyright © 2025 advertisingagency__o2 ';
+                document.getElementById('secondPopupTitle').textContent = 'Enter your number to get the latest offers 😍';
+                document.getElementById('phoneNumber').placeholder = 'Phone Number';
+                document.getElementById('submitButton').textContent = 'Submit';
+            } else {
+                document.documentElement.lang = 'ar';
+                document.documentElement.dir = 'rtl';
+                langButton.textContent = 'EN';
+                // تغيير النصوص إلى العربية
+                document.querySelector('.toggle-menu-btn').textContent = ' المنيو';
+                document.querySelector('#popup h2').textContent = 'أهلاً بحضرتك في أَســرَارٌ';
+                document.querySelector('#popup p').textContent = 'نتمنى يكون يوم حضرتك سعيد. ❤️';
+                document.querySelector('.popup-close').textContent = 'استمتع بالمنيو';
+                document.querySelector('.footer p').textContent = 'حقوق الطبع والنشر © 2025 advertisingagency__o2';
+                document.getElementById('secondPopupTitle').textContent = ' ادخل رقمك عشان تعرف كل العروض أول بأول!😍 ';
+                document.getElementById('phoneNumber').placeholder = 'رقم الهاتف';
+                document.getElementById('submitButton').textContent = 'إرسال';
+            }
+        }
+
+        // وظيفة زر العودة إلى الأعلى
+        window.onscroll = function() {
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        };
+
+        document.getElementById('backToTopBtn').onclick = function() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        };
+    </script>
+</body>
+</html>
