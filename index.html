@@ -6,10 +6,10 @@
     <title>🍽 ASRAR </title>
     <style>
         /* إضافة خطوط جديدة */
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Poppins:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Roboto:wght@400;600&display=swap');
 
         body {
-            font-family: 'Tajawal', sans-serif; /* خط عربي أنيق */
+            font-family: 'Cairo', sans-serif; /* خط عربي أنيق */
             background: radial-gradient(circle at top, hsl(39, 100%, 4%), #13131a);
             color: #fff;
             margin: 0;
@@ -25,7 +25,7 @@
         }
 
         /* تصميم أزرار المنيو */
-        .toggle-menu-btn {
+        .toggle-menu-btn, .toggle-ramadan-menu-btn {
             padding: 17px 40px;
             border-radius: 10px;
             border: 0;
@@ -36,36 +36,71 @@
             box-shadow: rgb(0, 0, 0) 0px 10px 0px 0px;
             color: hsl(0, 0%, 100%);
             cursor: pointer;
-            margin: 20px auto;
+            margin: 10px auto; /* تعديل المسافة بين الأزرار */
             display: block;
-            font-family: 'Poppins', sans-serif; /* خط إنجليزي أنيق */
+            font-family: 'Roboto', sans-serif; /* خط إنجليزي أنيق */
+            width: 200px; /* تحديد عرض ثابت للأزرار */
         }
 
-        .toggle-menu-btn:hover {
+        .toggle-menu-btn:hover, .toggle-ramadan-menu-btn:hover {
             box-shadow: rgb(0, 0, 0) 0px 7px 0px 0px;
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.05); /* إضافة تأثير تكبير */
         }
 
-        .toggle-menu-btn:active {
+        .toggle-menu-btn:active, .toggle-ramadan-menu-btn:active {
             background-color: rgb(0, 0, 0);
             box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
             transform: translateY(5px);
             transition: 200ms;
         }
 
-        .menu-container {
+        .menu-container, .ramadan-menu-container {
             width: 90%;
             max-width: 600px;
             margin: 0 auto;
             padding: 20px 0;
             display: none; /* مخفي بشكل افتراضي */
+            position: relative; /* لجعل الزينة تتداخل مع المحتوى */
         }
 
-        .menu-container img {
+        .menu-container img, .ramadan-menu-container img {
             width: 100%;
             margin-bottom: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            opacity: 0; /* جعل الصورة مخفية في البداية */
+            animation: fadeIn 1s forwards; /* إضافة تأثير التحميل */
+        }
+
+        /* تأثير التحميل */
+        @keyframes fadeIn {
+            to {
+                opacity: 1; /* جعل الصورة مرئية */
+            }
+        }
+
+        .ramadan-menu-container {
+            background-image: url('ramadan-background.jpg'); /* استبدل هذا بالمسار الصحيح لصورة الخلفية */
+            background-size: cover; /* لتغطية كامل المساحة */
+            background-position: center; /* لتوسيط الصورة */
+            padding: 20px; /* إضافة padding لتجنب التصاق المحتوى بالحواف */
+            border-radius: 10px; /* إضافة زوايا دائرية */
+        }
+
+        .ramadan-decoration {
+            width: 50px; /* حجم الزينة */
+            position: absolute; /* لجعلها تطفو فوق المحتوى */
+            z-index: 1; /* تأكد من أنها فوق المحتوى */
+        }
+
+        .ramadan-decoration:nth-child(1) {
+            top: 10px; /* موضع الزينة الأولى */
+            left: 10px;
+        }
+
+        .ramadan-decoration:nth-child(2) {
+            top: 10px; /* موضع الزينة الثانية */
+            right: 10px;
         }
 
         .footer {
@@ -291,7 +326,6 @@
             cursor: pointer;
             font-family: 'Poppins', sans-serif; /* خط إنجليزي أنيق */
         }
-
         #backToTopBtn:hover {
             box-shadow: rgb(0, 0, 0) 0px 7px 0px 0px;
             transform: translateY(-2px); /* تعديل التحريك عند التمرير */
@@ -455,6 +489,7 @@
 
     <img src="logo.png" alt="لوجو المطعم" class="logo" loading="lazy">
     <button class="toggle-menu-btn" onclick="toggleMenu()">المنيو</button>
+    <button class="toggle-ramadan-menu-btn" onclick="toggleRamadanMenu()">منيو رمضان🌙</button>
 
     <div class="menu-container" id="menuContainer">
         <!-- هنا تضيف صور المنيو -->
@@ -478,17 +513,27 @@
         <!-- كرر السطر السابق لكل صفحة من المنيو -->
     </div>
 
+    <div class="ramadan-menu-container" id="ramadanMenuContainer">
+        <h2 style="text-align: center; color: #fff;">رمضان أحلى مع أســرار🌙</h2>
+        <img src="m1.webp" alt="صفحة 1 من منيو رمضان" loading="lazy">
+        <img src="m2.webp" alt="صفحة 2 من منيو رمضان" loading="lazy">
+        <img src="m3.webp" alt="صفحة 3 من منيو رمضان" loading="lazy">
+        <img src="m4.webp" alt="صفحة 2 من منيو رمضان" loading="lazy">
+        <img src="m5.webp" alt="صفحة 3 من منيو رمضان" loading="lazy">
+        <!-- كرر السطر السابق لكل صفحة من منيو رمضان -->
+    </div>
+
     <!-- البوب الأول -->
     <div id="popup" class="popup">
         <h2>أهلاً بحضرتك في أَســرَارٌ</h2>
-        <p> نتمنى يكون يوم حضرتك سعيد.❤️ </p>
+        <p> فريق أسرار بيقولكم كل سنة وأنتم طيبين ورمضان كريــــــــــــــــــــــــــــــم! 🌙❤️ </p>
         <button class="popup-close" onclick="closePopup()"> استمتع بالمنيو </button>
     </div>
 
     <!-- البوب الثاني -->
     <div id="secondPopup" class="popup" style="display: none;">
         <button class="close-popup-btn" onclick="closeSecondPopup()">X</button> <!-- زر الإغلاق -->
-        <h2 id="secondPopupTitle">ممكن رقمك عشان نبعت لك كل العروض أول بأول!😍  </h2>
+        <h2 id="secondPopupTitle">ادخل رقمك عشان تعرف كل العروض أول بأول😍</h2>
         <input type="text" id="phoneNumber" placeholder="رقم الهاتف" maxlength="11">
         <button class="popup-close" onclick="submitPhoneNumber()" id="submitButton">إرسال</button>
     </div>
@@ -548,10 +593,25 @@
         // وظيفة عرض/إخفاء المنيو
         function toggleMenu() {
             const menuContainer = document.getElementById('menuContainer');
+            const ramadanMenuContainer = document.getElementById('ramadanMenuContainer');
             const toggleButton = document.querySelector('.toggle-menu-btn');
 
+            ramadanMenuContainer.style.display = 'none'; // إخفاء منيو رمضان
             menuContainer.style.display = 'block'; // عرض المنيو
-            toggleButton.style.display = 'none'; // إخفاء الزر بعد الضغط عليه
+            toggleButton.style.display = 'none'; // إخفاء زر المنيو
+            document.querySelector('.toggle-ramadan-menu-btn').style.display = 'block'; // إظهار زر منيو رمضان
+        }
+
+        // وظيفة عرض/إخفاء منيو رمضان
+        function toggleRamadanMenu() {
+            const ramadanMenuContainer = document.getElementById('ramadanMenuContainer');
+            const menuContainer = document.getElementById('menuContainer');
+            const toggleButton = document.querySelector('.toggle-ramadan-menu-btn');
+
+            menuContainer.style.display = 'none'; // إخفاء المنيو
+            ramadanMenuContainer.style.display = 'block'; // عرض منيو رمضان
+            toggleButton.style.display = 'none'; // إخفاء زر منيو رمضان
+            document.querySelector('.toggle-menu-btn').style.display = 'block'; // إظهار زر المنيو
         }
 
         // وظيفة إغلاق البوب الأول
@@ -638,12 +698,13 @@
                 document.documentElement.dir = 'ltr';
                 langButton.textContent = 'AR';
                 // تغيير النصوص إلى الإنجليزية
-                document.querySelector('.toggle-menu-btn').textContent = ' The menu';
+                document.querySelector('.toggle-menu-btn').textContent = 'The menu';
+                document.querySelector('.toggle-ramadan-menu-btn').textContent = 'Ramadan Menu🌙';
                 document.querySelector('#popup h2').textContent = 'Welcome to ASRAR';
-                document.querySelector('#popup p').textContent = 'We hope you have a happy day. ❤️';
+                document.querySelector('#popup p').textContent = 'Asrar Team wishes you a blessed Ramadan! 🌙❤️';
                 document.querySelector('.popup-close').textContent = 'Enjoy the menu';
                 document.querySelector('.footer p').textContent = 'Copyright © 2025 advertisingagency__o2 ';
-                document.getElementById('secondPopupTitle').textContent = 'Can we have your number so we can send you all the offers first hand?😍';
+                document.getElementById('secondPopupTitle').textContent = 'Enter your number to get the latest offers 😍';
                 document.getElementById('phoneNumber').placeholder = 'Phone Number';
                 document.getElementById('submitButton').textContent = 'Submit';
             } else {
@@ -651,12 +712,13 @@
                 document.documentElement.dir = 'rtl';
                 langButton.textContent = 'EN';
                 // تغيير النصوص إلى العربية
-                document.querySelector('.toggle-menu-btn').textContent = ' المنيو';
+                document.querySelector('.toggle-menu-btn').textContent = 'المنيو';
+                document.querySelector('.toggle-ramadan-menu-btn').textContent = '🌙منيو رمضان';
                 document.querySelector('#popup h2').textContent = 'أهلاً بحضرتك في أَســرَارٌ';
-                document.querySelector('#popup p').textContent = 'نتمنى يكون يوم حضرتك سعيد. ❤️';
+                document.querySelector('#popup p').textContent = 'فريق أسرار بيقولكم كل سنة وأنتم طيبين ورمضان كريــــــــــــــــــــــــــــــم! 🌙❤️';
                 document.querySelector('.popup-close').textContent = 'استمتع بالمنيو';
                 document.querySelector('.footer p').textContent = 'حقوق الطبع والنشر © 2025 advertisingagency__o2';
-                document.getElementById('secondPopupTitle').textContent = ' ممكن رقمك عشان نبعت لك كل العروض أول بأول!😍 ';
+                document.getElementById('secondPopupTitle').textContent = 'ادخل رقمك عشان تعرف كل العروض أول بأول!😍';
                 document.getElementById('phoneNumber').placeholder = 'رقم الهاتف';
                 document.getElementById('submitButton').textContent = 'إرسال';
             }
